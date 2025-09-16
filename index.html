@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Gems BW | First Year Student Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #3a6ea5;
+            --secondary: #004e98;
+            --accent: #ff6b6b;
+            --light: #f5f5f5;
+            --dark: #333;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page {
+            display: none;
+            padding: 3rem 0;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* About Page */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-text h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        /* Botswana Gems Section */
+        .botswana-gems {
+            margin: 4rem 0;
+        }
+        
+        .gems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .gem-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .gem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gem-img {
+            height: 200px;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .gem-content {
+            padding: 1.5rem;
+        }
+        
+        .gem-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .gem-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .read-more:hover {
+            color: var(--accent);
+        }
+        
+        /* Resume Page */
+        .resume-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+        
+        .experience, .education {
+            margin-bottom: 2.5rem;
+        }
+        
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 25px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: var(--primary);
+        }
+        
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        
+        .timeline-item h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item .date {
+            color: #777;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .skills-list {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill {
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background: #e9e9e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-level {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        /* Blog Pages */
+        .blog-post {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .blog-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-title {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-meta {
+            color: #777;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+        
+        /* Contact Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Resources Page */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .resource-list {
+            list-style: none;
+        }
+        
+        .resource-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .resource-list li:before {
+            content: '➤';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .resource-list a {
+            color: #444;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .resource-list a:hover {
+            color: var(--accent);
+        }
+        
+        /* Projects Page */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-img {
+            height: 200px;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .project-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content, .resume-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        .learning-path {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 2rem 0;
+        }
+
+        .learning-path h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .path-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .path-item {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: var(--light);
+            transition: var(--transition);
+        }
+
+        .path-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .path-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .path-item h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-gem"></i>
+                The Hidden <span>Gems</span> BW
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="about">About Me</a></li>
+                    <li><a href="#" data-page="resume">Resume</a></li>
+                    <li><a href="#" data-page="blog">Blog</a></li>
+                    <li><a href="#" data-page="skills">Skills & Projects</a></li>
+                    <li><a href="#" data-page="contact">Contact</a></li>
+                    <li><a href="#" data-page="resources">Study Resources</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>First Year Student Exploring Botswana's Treasures</h1>
+                <p>Join me on my academic journey as I discover Botswana's cultural heritage while developing my skills and knowledge.</p>
+                <a href="#" data-page="about" class="btn">Get to Know Me</a>
+            </div>
+
+            <h2 class="page-title">Botswana's Hidden Gems</h2>
+            
+            <div class="gems-grid">
+                <div class="gem-card">
+                    <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1570586437265-ab357bfe067d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="gem-content">
+                        <h3>Tsodilo Hills</h3>
+                        <p>The Louvre of the Desert with over 4,500 rock paintings, a UNESCO World Heritage site that holds spiritual significance for the San people.</p>
+                        <a href="#" class="read-more">Discover More →</a>
+                    </div>
+                </div>
+                
+                <div class="gem-card">
+                    <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="gem-content">
+                        <h3>Okavango Delta</h3>
+                        <p>One of the world's largest inland deltas, a unique pulsing wetland that provides a vital habitat for countless species and a stunning landscape.</p>
+                        <a href="#" class="read-more">Discover More →</a>
+                    </div>
+                </div>
+                
+                <div class="gem-card">
+                    <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="gem-content">
+                        <h3>Tswapong Hills</h3>
+                        <p>An area of great historical and spiritual significance with numerous villages, waterfalls, and ancient ruins waiting to be explored.</p>
+                        <a href="#" class="read-more">Discover More →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learning-path">
+                <h2>My Learning Journey</h2>
+                <div class="path-items">
+                    <div class="path-item">
+                        <i class="fas fa-book-open"></i>
+                        <h3>First Year Studies</h3>
+                        <p>Currently exploring foundational concepts in my field of study</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Skill Development</h3>
+                        <p>Building technical and soft skills through coursework</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-users"></i>
+                        <h3>Group Projects</h3>
+                        <p>Learning to collaborate effectively with peers</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-binoculars"></i>
+                        <h3>Future Goals</h3>
+                        <p>Planning for internships and specialization areas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Page -->
+        <section id="about" class="page">
+            <h2 class="page-title">About Me</h2>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="profile-img" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'); height: 400px;"></div>
+                </div>
+                
+                <div class="about-text">
+                    <h2>Hello, I'm a First Year Student</h2>
+                    <p>Welcome to my personal blog! I'm currently in my first year of studies, exploring various subjects and discovering my academic interests. While I'm just beginning my journey, I'm excited to share my learning process and growth.</p>
+                    
+                    <p>I created "The Hidden Gems BW" to document both my personal development as a student and my exploration of Botswana's cultural heritage. As I learn new skills through my coursework, I'm applying them to create this platform and share Botswana's unique stories.</p>
+                    
+                    <p>While I don't have professional experience yet, I'm actively involved in student organizations and group projects that are helping me develop teamwork and communication skills. I'm particularly interested in how technology can be used to preserve and share cultural heritage.</p>
+                    
+                    <p>When I'm not studying, you can find me exploring local cultural sites, reading about Botswana's history, or practicing the technical skills I'm learning in class. I believe that the best way to learn is by doing, which is why I've created this blog to apply my knowledge.</p>
+                    
+                    <p>My goal is to use this platform to track my growth throughout my academic journey while showcasing the beautiful aspects of Botswana that often go unnoticed.</p>
+                    
+                    <a href="#" data-page="contact" class="btn">Get In Touch</a>
+                </div>
+            </div>
+
+            <div class="botswana-gems">
+                <h2 class="page-title">My Academic Interests</h2>
+                <div class="gems-grid">
+                    <div class="gem-card">
+                        <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                        <div class="gem-content">
+                            <h3>Digital Storytelling</h3>
+                            <p>Exploring how technology can be used to share cultural narratives in engaging ways.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gem-card">
+                        <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                        <div class="gem-content">
+                            <h3>Web Development</h3>
+                            <p>Learning to create functional and beautiful websites through my coursework.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gem-card">
+                        <div class="gem-img" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                        <div class="gem-content">
+                            <h3>Cultural Research</h3>
+                            <p>Developing skills in documenting and preserving cultural heritage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Page -->
+        <section id="resume" class="page">
+            <h2 class="page-title">My Resume</h2>
+            
+            <div class="resume-container">
+                <div class="main-content">
+                    <div class="education">
+                        <h2>Education</h2>
+                        
+                        <div class="timeline-item">
+                            <h3>First Year University Student</h3>
+                            <span class="date">2023 - Present</span>
+                            <p>Currently completing foundational courses in my degree program</p>
+                            <p>Exploring various subjects to determine my specialization interests</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h3>High School Diploma</h3>
+                            <span class="date">2017 - 2022</span>
+                            <p>Graduated with focus on sciences and humanities</p>
+                            <p>Participated in student government and cultural clubs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="experience">
+                        <h2>Academic Projects</h2>
+                        
+                        <div class="timeline-item">
+                            <h3>First Year Group Project</h3>
+                            <span class="date">2023 - Present</span>
+                            <p>Collaborating with classmates on a semester-long research project</p>
+                            <p>Learning project management and teamwork skills</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h3>Personal Blog Development</h3>
+                            <span class="date">2023 - Present</span>
+                            <p>Creating and maintaining this blog to practice web development skills</p>
+                            <p>Researching and writing about Botswana's cultural heritage</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar">
+                    <div class="skills-list">
+                        <h2>Developing Skills</h2>
+                        
+                        <div class="skill">
+                            <h3>HTML/CSS <span>65%</span></h3>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <h3>Research <span>70%</span></h3>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <h3>Academic Writing <span>75%</span></h3>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <h3>Team Collaboration <span>80%</span></h3>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill">
+                            <h3>Presentation Skills <span>70%</span></h3>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="download-resume">
+                        <a href="#" class="btn" style="margin-top: 2rem; display: block; text-align: center;">Download Academic CV</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="learning-path">
+                <h2>Future Learning Goals</h2>
+                <div class="path-items">
+                    <div class="path-item">
+                        <i class="fas fa-code"></i>
+                        <h3>Advanced Web Development</h3>
+                        <p>Plan to learn JavaScript and backend development</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Data Analysis</h3>
+                        <p>Interested in developing data visualization skills</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-camera"></i>
+                        <h3>Digital Media Production</h3>
+                        <p>Want to learn photo and video editing techniques</p>
+                    </div>
+                    <div class="path-item">
+                        <i class="fas fa-globe"></i>
+                        <h3>Language Skills</h3>
+                        <p>Planning to improve my English and learn another language</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional sections for Blog, Skills & Projects, Contact, and Study Resources would go here -->
+        
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Hidden Gems BW</h3>
+                    <p>A first-year student's journey through academia and cultural exploration.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="about">About Me</a></li>
+                        <li><a href="#" data-page="resume">Resume</a></li>
+                        <li><a href="#" data-page="blog">Blog</a></li>
+                        <li><a href="#" data-page="skills">Skills & Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: student@hiddengemsbw.com</p>
+                    <p>Phone: +267 123 4567</p>
+                    <p>Location: Gaborone, Botswana</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 The Hidden Gems BW. All rights reserved. | First Year Student Blog</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple page navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageLinks = document.querySelectorAll('a[data-page]');
+            
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Hide all pages
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show target page
+                    document.getElementById(targetPage).classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
